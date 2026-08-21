@@ -405,8 +405,11 @@ select.inp{cursor:pointer}
     <div class="card" style="margin-bottom:16px">
       <div class="fgrid">
         <div class="f full"><label>동기화 코드</label>
-          <input class="inp" id="syncCode" placeholder="예) YJJ-PORT" maxlength="40">
-          <div class="hint">같은 코드를 넣으면 폰·태블릿·PC 어디서든 같은 데이터를 씁니다. 영문·숫자·하이픈 3~40자.</div>
+          <div style="display:flex;gap:7px">
+            <input class="inp" id="syncCode" placeholder="예) YJJ-KJTR-ACCC-7FCG-KHHV" maxlength="40" style="flex:1">
+            <button class="btn" id="genBtn" title="추측하기 어려운 긴 코드 생성">🎲 긴 코드</button>
+          </div>
+          <div class="hint">같은 코드를 넣으면 폰·태블릿·PC 어디서든 같은 데이터를 씁니다. <b>이 코드가 계정 비밀번호 역할을 하므로 짧게 쓰지 마세요.</b> 코드를 바꾸면 새 코드로 한 번 저장해야 합니다.</div>
         </div>
         <div class="f full" style="flex-direction:row;gap:9px;flex-wrap:wrap">
           <button class="btn pri" id="pushBtn">⬆ 클라우드에 저장</button>
@@ -1133,6 +1136,15 @@ function bind(){
   $('mSearch').onkeydown=function(e){ if(e.key==='Enter'){ e.preventDefault(); doSearch(); } };
 
   $('syncCode').oninput=function(){ S.syncCode=this.value.trim().toUpperCase().replace(/[^A-Z0-9_-]/g,''); this.value=S.syncCode; persist(); syncInfo(); };
+  $('genBtn').onclick=function(){
+    var AB='ABCDEFGHJKLMNPQRTUVWXY3456789', out=[];
+    var buf=new Uint32Array(16);
+    (window.crypto||window.msCrypto).getRandomValues(buf);
+    for(var i=0;i<16;i++){ out.push(AB.charAt(buf[i]%AB.length)); if(i%4===3 && i<15) out.push('-'); }
+    var code='YJJ-'+out.join('');
+    S.syncCode=code; $('syncCode').value=code; persist(); syncInfo();
+    toast('새 코드 생성됨 — ⬆ 클라우드에 저장을 누르세요','ok');
+  };
   $('pushBtn').onclick=function(){ push(false); };
   $('pullBtn').onclick=pull;
   $('autoSync').onchange=function(){ S.autoSync=this.checked; persist(); syncInfo(); };
