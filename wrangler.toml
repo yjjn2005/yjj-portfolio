@@ -1,0 +1,13 @@
+name = "yjj-portfolio"
+main = "src/worker.js"
+compatibility_date = "2026-08-01"
+
+[assets]
+directory = "./docs"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# 모든 디바이스 동기화용 저장소 (npx wrangler kv namespace create SYNC 로 생성)
+[[kv_namespaces]]
+binding = "SYNC"
+id = "20dea994176d4ff5812120e64ae63570"

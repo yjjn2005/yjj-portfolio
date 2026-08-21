@@ -1,0 +1,7 @@
+# 실제 보유종목·금액 데이터 — 저장소에 올리지 않는다 (Cloudflare 배포본에만 포함)
+docs/seed.json
+
+node_modules/
+.wrangler/
+*.log
+.DS_Store

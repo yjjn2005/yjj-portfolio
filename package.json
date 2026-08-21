@@ -1,0 +1,14 @@
+{
+  "name": "yjj-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "유재진 통합 포트폴리오 · 실시간 수익률 (Cloudflare Workers)",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "kv": "wrangler kv namespace create SYNC"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
