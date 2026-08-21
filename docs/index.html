@@ -1189,8 +1189,10 @@ function boot(){
 
 /* seed.json 은 Cloudflare 배포본에만 있다. 없으면(GitHub Pages) 동기화 코드로 시작한다. */
 var SEED = { positions: [] };
-fetch('./seed.json').then(function(r){ return r.ok ? r.json() : null; })
-  .catch(function(){ return null; })
+/* seed.json 은 Cloudflare 배포본에만 있다. 그 외 도메인에서는 아예 요청하지 않는다(404 방지). */
+(API === location.origin
+  ? fetch('./seed.json').then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; })
+  : Promise.resolve(null))
   .then(function(sd){
     if(sd && sd.positions && sd.positions.length){
       SEED=sd; HAS_SEED=true;
